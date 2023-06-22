@@ -31,7 +31,7 @@ const Movie = mongoose.model('Movie', movieSchema, 'movies');
 
 
 
-app.get(`${process.env.MONGO_URI}/api/movies`, (req, res) => {
+app.get(`/api/movies`, (req, res) => {
 
   Movie.find()
     .then((movies) => {
@@ -87,11 +87,11 @@ app.delete('/api/movies/:id', (req, res) => {
     });
 });
 
-// app.use(express.static(path.join(__dirname, 'build')));
+app.use(express.static(path.join(__dirname, 'build')));
 
-// app.get('/success', (req, res) => {
-//   res.sendFile(path.join(__dirname, 'build', 'index.html'));
-// });
+app.get('/success', (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
