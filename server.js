@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const path = require('path');
-const PORT = process.env.PORT 
+const PORT = process.env.PORT || 3001
 
 require('dotenv').config();
 const app = express();
@@ -10,7 +10,7 @@ app.use(express.json());
 app.use(cors());
 
 
-mongoose.connect(' mongodb+srv://nikhil:nikhil123@ottdatabase.85a7edl.mongodb.net/?retryWrites=true&w=majority', {
+mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
@@ -28,7 +28,7 @@ const movieSchema = new mongoose.Schema({
   rating: {type: Number, required: true, min:0, max:10},
 });
 
-const Movie = mongoose.model('Movie', movieSchema);
+const Movie = mongoose.model('Movie', movieSchema, 'movies');
 
 
 
