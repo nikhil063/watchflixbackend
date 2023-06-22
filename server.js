@@ -10,7 +10,7 @@ app.use(express.json());
 app.use(cors());
 
 
-mongoose.connect(process.env.MONGO_URI, {
+mongoose.connect(' mongodb+srv://nikhil:nikhil123@ottdatabase.85a7edl.mongodb.net/?retryWrites=true&w=majority', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
