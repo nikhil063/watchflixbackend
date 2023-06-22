@@ -2,13 +2,12 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const path = require('path');
-const PORT = process.env.PORT || 3001
+const PORT = process.env.PORT || 3001;
 
 require('dotenv').config();
 const app = express();
 app.use(express.json());
 app.use(cors());
-
 
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
@@ -88,11 +87,11 @@ app.delete('/api/movies/:id', (req, res) => {
     });
 });
 
-app.use(express.static(path.join(__dirname, 'build')));
+// app.use(express.static(path.join(__dirname, 'build')));
 
-app.get('/success', (req, res) => {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
-});
+// app.get('/success', (req, res) => {
+//   res.sendFile(path.join(__dirname, 'build', 'index.html'));
+// });
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
