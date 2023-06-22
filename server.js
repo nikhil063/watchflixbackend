@@ -4,13 +4,13 @@ const cors = require('cors');
 const path = require('path');
 const PORT = process.env.PORT || 3001
 
-
+require('dotenv').config();
 const app = express();
 app.use(express.json());
 app.use(cors());
 
 
-mongoose.connect(`${process.env.DATABASE}`, {
+mongoose.connect(process.env.DATABASE, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
