@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const path = require('path');
+const PORT = process.env.PORT || 3001
 
 
 const app = express();
@@ -9,7 +10,7 @@ app.use(express.json());
 app.use(cors());
 
 
-mongoose.connect('mongodb://127.0.0.1:27017/ott_database', {
+mongoose.connect(`${process.env.DATABASE}`, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
@@ -93,6 +94,6 @@ app.get('/success', (req, res) => {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
-app.listen(3001, () => {
-  console.log('Server is running');
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
