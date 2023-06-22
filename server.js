@@ -31,7 +31,7 @@ const Movie = mongoose.model('Movie', movieSchema, 'movies');
 
 
 
-app.get('/api/movies', (req, res) => {
+app.get(`${process.env.MONGO_URI}/api/movies`, (req, res) => {
 
   Movie.find()
     .then((movies) => {
