@@ -1,13 +1,49 @@
+const Razorpay = require('razorpay')
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const path = require('path');
+const paymentRoute = require('./routes/paymentRoute.js');
 const PORT = process.env.PORT || 3001;
+
 
 require('dotenv').config();
 const app = express();
-app.use(express.json());
 app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+const paymentSchema = new mongoose.Schema({
+  razorpay_order_id: {
+    type: String,
+    required: true,
+  },
+  razorpay_payment_id: {
+    type: String,
+    required: true,
+  },
+  razorpay_signature: {
+    type: String,
+    required: true,
+  },
+});
+
+const Payment = mongoose.model("Payment", paymentSchema);
+
+const connectDB = async () => {
+  const { connection } = await mongoose.connect(process.env.MONGO_URI);
+  console.log(`Mongodb is connected with payment db at ${connection.host}`);
+};
+
+connectDB();
+
+const instance = new Razorpay({
+    key_id: process.env.RAZORPAY_API_KEY,
+    key_secret: process.env.RAZORPAY_API_SECRET,
+});
+
+
+
 
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
@@ -20,7 +56,6 @@ mongoose.connect(process.env.MONGO_URI, {
     console.error('Error connecting to Database:', error);
   });
 
-
 const movieSchema = new mongoose.Schema({
   title:{type: String, required: true},
   description: {type: String, required: true},
@@ -29,6 +64,13 @@ const movieSchema = new mongoose.Schema({
 
 const Movie = mongoose.model('Movie', movieSchema);
 
+
+
+app.use("/api", paymentRoute);
+
+app.get("/api/getkey", (req, res) =>
+  res.status(200).json({ key: process.env.RAZORPAY_API_KEY })
+);
 
 
 app.get(`/api/movies`, (req, res) => {
@@ -96,3 +138,16 @@ app.get('/success', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+
+
+module.exports = {
+  Payment,instance
+
+};
+
+
+
+
+
+
+
