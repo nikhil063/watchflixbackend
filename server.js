@@ -125,5 +125,4 @@ app.listen(PORT, () => {
 
 module.exports = {
   Payment
-
 };
