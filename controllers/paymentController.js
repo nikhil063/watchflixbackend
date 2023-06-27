@@ -65,7 +65,7 @@ const Payment = require("../server.js").Payment;
       });
 
       res.redirect(
-        `http://localhost:3000/success?reference=${razorpay_payment_id}`
+        `https://watchflixott.netlify.app/success?reference=${razorpay_payment_id}`
       );
     } catch (error) {
       res.status(500).json({
