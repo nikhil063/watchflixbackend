@@ -1,9 +1,5 @@
-// const instance  = require("../server.js");
 const Razorpay = require('razorpay')
 const crypto = require("crypto");
-// const Payment = require("../server.js");
-// const Payment = require("../server.js").Payment; 
-
 require('dotenv').config();
 
 
